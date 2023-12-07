@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de registro</title>
+    <style>body {
+        font-family: 'Arial', sans-serif;
+        background-color: #000;
+        color: #fff;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    
+    .Principal {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100vh;
+        padding: 0 20px; /* Añadido un relleno a los lados para separar los elementos */
+    }
+    
+    
+    .Iniciar {
+        background-color: #000;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        text-align: center;
+        margin: 0 auto; /* Para centrar .Iniciar */
+        margin-right:50px;
+    }
+    
+    
+    h2 {
+        color: #ff00ff;
+    }
+    
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-right: 50px;
+    }
+    
+    
+    label {
+        margin-bottom: 5px;
+        color: #ff00ff;
+        display:flex;
+    }
+    
+    
+    input {
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ff00ff;
+        border-radius: 5px;
+    }
+    
+    
+    button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    
+    .login {
+        background-color: #ff00ff;
+        color: #000;
+    }
+    
+    
+    .register {
+        background-color: #000;
+        color: #ff00ff;
+        margin-top: 10px;
+    }
+    
+    
+    .MostrarDatos {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        color: #ff00ff;
+    }
+    
+    
+    #datospublicos {
+        width: 400px;
+        height: 300px;
+        border: 1px solid #ff00ff;
+        border-radius: 5px;
+        background-color: #000;
+        color: #fff;
+        resize: none;
+    }
+    
+    
+    </style>
+</head>
+<body>
+
+
+    <div class="Principal">
+        <div class="Iniciar">
+            <h2>Registrarse</h2>
+
+
+            <form  id="formularioregistro">
+                <div>
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div>
+                    <label for="text">Correo Electronico:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div>
+                    <label for="text"> ROL</label>
+                    <input type="text" id="rol" name="rol" required>
+                </div>
+
+
+                <div>
+                    <button type="button"  class="login" id="buttonregis">Aceptar</button>
+                    <button type="button" onclick="window.location.href='/'" class="register">Atras</button>
+                    
+                </div>
+            </form>
+            <script>
+
+                document.addEventListener('DOMContentLoaded', function () {
+                  var tok;
+                  const regisButton = document.getElementById('buttonregis');
+                  
+                
+                  regisButton.addEventListener('click', async function () {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const email = document.getElementById("email").value;
+                    const rol = document.getElementById("rol").value;
+                    
+                    const datos ={
+                        "username":username,
+                        "email":email,
+                        "password":password,
+                        "roles": [rol],
+                    }
+                
+                    try {
+                      // Realizar la solicitud POST para iniciar sesión
+                      const response = await fetch('/api/auth/signup', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(datos),
+                      });
+                
+                      // Verificar si la solicitud POST fue exitosa (código de estado 2xx)
+                      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Respuesta del servidor:', responseData);
+      } else {
+        console.error('Error en la solicitud POST:', response.statusText);
+      }
+                    } catch (error) {
+                      // Capturar errores durante el proceso de solicitud POST
+                      console.error('Error al realizar la solicitud POST:', error.message);
+                    }
+                  });
+                
+                 
+                });
+                
+                            
+                            </script>
+            
+        </div>
+
+
+    </div>
+
+
+   
+
+
+</body>
+</html>
+
+
+
